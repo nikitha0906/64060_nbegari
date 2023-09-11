@@ -1,0 +1,39 @@
+---
+title: "64060_nbegari"
+output: html_document
+date: "2023-09-10"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##source: https://kent.instructure.com/courses/62179/pages/csv-files?module_item_id=3213624
+
+```{r}
+# read the data and store data in DataFrame titled Cereals
+
+library("readxl")
+Cereals <- read.csv("C:/Users/Princy/Documents/Cereals.csv")
+View(Cereals)
+summary(Cereals)
+```
+
+
+#let's normalize the data before modelling 
+
+```{r}
+library(caret)
+calories_1 <- as.data.frame(Cereals$calories)
+norm_model<-preProcess(calories_1, method = c('range')) # We are using range here, but we can easily switch to c("center", "scale")
+Default_normalized<-predict(norm_model,calories_1)
+summary(Default_normalized)
+sd(Default_normalized$balance)
+
+```
+
+# Scatter Plot
+
+```{r}
+plot(Cereals$calories, Cereals$protein)
+```
